@@ -25,15 +25,8 @@ int main (int argc, char *argv[]) {
   return 0;
 }
 
-// void *createThreads (void *argumento){
-//   pthread_t h1;
-//   pthread_create (&h1, NULL, factorial, (void *) argumento);
-//   printf("In function \nthread id = %d\n", pthread_self()); 
-//   pthread_join (h1, NULL);
-// }
-
 void *factorial (void *argumento) {
-  printf("In function \nthread id = %d\n", pthread_self()); 
+  printf("Thread id = %d\n", pthread_self()); 
   long long int resultado= 1;
   int num, n = atoi((char *) argumento);
   for (num= 2; num<= n; num++) {
