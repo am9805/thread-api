@@ -33,7 +33,8 @@ void *contarCaracteres(void *nombre) {
   pthread_t hiloSumador1, hiloSumador2;
   char *caracteres = (char *) malloc(sizeof(char));
   caracteres[0] = '\0';
-  printf("Thread id = %d\t[Contador]\n", (int) pthread_self()); 
+  int hiloId = (int) pthread_self();
+  printf("[Contador \t (%d)] Iniciando\n", hiloId); 
   int total = 0;
   int fd = open((char *) nombre, O_RDONLY);
   while(read(fd, &c, sizeof(c) != 0)) {
@@ -59,24 +60,25 @@ void *contarCaracteres(void *nombre) {
   pthread_join(hiloSumador1, NULL);
   pthread_join(hiloSumador2, NULL);
   resultadoFinal = insumo1.resultado + insumo2.resultado;
-  printf("Resultado de la suma del hilo 1: %d\n", insumo1.resultado);
-  printf("Resultado de la suma del hilo 2: %d\n", insumo2.resultado);
-  printf("Resultado de la suma: %d\n", resultadoFinal);
+  printf("[Contador \t (%d)] Resultado de la suma del hilo 1: %d\n", hiloId, insumo1.resultado);
+  printf("[Contador \t (%d)] Resultado de la suma del hilo 2: %d\n", hiloId, insumo2.resultado);
+  printf("[Contador \t (%d)] Resultado de la suma: %d\n", hiloId, resultadoFinal);
   free(caracteres);
   return NULL;
 }
 
 void *suma(void *insumo) {
     InsumosDeSuma *insumoLocal = (InsumosDeSuma *) insumo;
-    printf("Thread id = %d\t[Sumador]\n", (int) pthread_self()); 
+    int hiloId = (int) pthread_self();
+    printf("[Sumador \t (%d)] Iniciando\n", hiloId); 
     int acumulador = 0;
     char *conjunto = (char *) insumoLocal->conjuntoDeNumeros;
-    printf("Elementos a sumar: %d\n", insumoLocal->limSuperior);
+    printf("[Sumador \t (%d)] Elementos a sumar: %d\n", hiloId, insumoLocal->limSuperior);
     for(int i = 0; i < insumoLocal->limSuperior; i++) {
-        printf("Número en curso: %c\n", conjunto[i]);
+        printf("[Sumador \t (%d)] Número en curso: %c\n", hiloId, conjunto[i]);
         acumulador += ((char) conjunto[i]) - '0';
     }
     insumoLocal->resultado = acumulador;
-    printf("Acumulado papeeh %d\n", insumoLocal->resultado);
+    printf("[Sumador \t (%d)] Acumulado papeeh %d\n", hiloId, insumoLocal->resultado);
     return NULL;
 }
