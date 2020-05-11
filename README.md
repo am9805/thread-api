@@ -1,5 +1,8 @@
 # Actividad de laboratorio #
 
+### Integrantes
+Alejandro Castaño Rojas - Angélica Arroyave Mendoza
+
 1. Dado el siguiente código:
 
 ```C
